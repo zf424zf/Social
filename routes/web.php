@@ -19,4 +19,7 @@ Route::namespace('StaticPage')->prefix('static')->group(function(){
 Route::namespace('User')->group(function () {
     Route::get('reg','UserController@register')->name('reg');
     Route::resource('users', 'UserController');
+    Route::get('login', 'SessionController@create')->name('login');
+    Route::post('login', 'SessionController@store')->name('login');
+    Route::delete('logout', 'SessionController@destroy')->name('logout');
 });
