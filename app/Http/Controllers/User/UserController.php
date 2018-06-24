@@ -34,7 +34,8 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        return view('user.show', compact('user'));
+        $statuses = $user->statuses()->orderBy('created_at', 'desc')->paginate(30);
+        return view('user.show', compact('user','statuses'));
     }
 
     public function store(Request $request)
@@ -101,7 +102,7 @@ class UserController extends Controller
     {
         $view = 'emails.confirm';
         $data = compact('user');
-        $from = 'ricefur@qq.com';
+        $from = '704273241@qq.com';
         $name = 'ricefur';
         $to = $user->email;
         $subject = "感谢注册 Social Blog 应用！请确认你的邮箱。";
@@ -115,7 +116,7 @@ class UserController extends Controller
 
     public function confirmEmail($token)
     {
-        $user = User::where('activation_token',$token)->firstOrFail();
+        $user = User::where('activation_token', $token)->firstOrFail();
         $user->activated = true;
         $user->activation_token = null;
         $user->save();
