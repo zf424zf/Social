@@ -23,6 +23,8 @@ Route::namespace('User')->group(function () {
     Route::post('login', 'SessionController@store')->name('login');
     Route::delete('logout', 'SessionController@destroy')->name('logout');
     Route::get('signup/confirm/{token}', 'UserController@confirmEmail')->name('confirm_email');
+    Route::get('/users/{user}/followings', 'UserController@followings')->name('users.followings');
+    Route::get('/users/{user}/followers', 'UserController@followers')->name('users.followers');
 });
 Route::namespace('Auth')->group(function () {
     Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -31,3 +33,8 @@ Route::namespace('Auth')->group(function () {
     Route::post('password/reset', 'ResetPasswordController@reset')->name('password.update');
 });
 Route::resource('status', 'StatusController', ['only' => ['store', 'destroy']]);
+
+Route::namespace('Follow')->group(function () {
+    Route::post('follow/{user}', 'FollowController@store')->name('followers.store');
+    Route::delete('follow/{user}', 'FollowController@destroy')->name('followers.destroy');
+});

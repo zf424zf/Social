@@ -18,7 +18,7 @@ class StatusController extends Controller
         $this->validate($request, [
             'content' => 'required|max:140'
         ]);
-        \Auth::user()->status()->create(
+        \Auth::user()->statuses()->create(
             [
                 'content' => $request['content']
             ]
