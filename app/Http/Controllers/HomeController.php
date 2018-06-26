@@ -12,6 +12,10 @@ namespace App\Http\Controllers;
 class HomeController extends Controller
 {
     public function index(){
-        return view('home');
+        $feed_items = [];
+        if (\Auth::check()) {
+            $feed_items = \Auth::user()->feed()->paginate(30);
+        }
+        return view('home',compact('feed_items'));
     }
 }
